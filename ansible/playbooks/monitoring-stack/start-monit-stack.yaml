@@ -1,0 +1,28 @@
+- hosts: monitoring
+  become: yes 
+  vars:
+    monitor_path: "/home/{{ ansible_user }}/monitoring"
+  tasks:
+    
+    - name: Create monitoring directory on the server
+      ansible.builtin.file:
+        path: "{{monitor_path}}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+
+    - name: Copy docker-compose.yml to the server
+      ansible.builtin.copy:
+        src: ~/Key-projects/docker/monitoring-stack/docker-compose.yaml
+        dest: "{{monitor_path}}/docker-compose.yaml"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+    - name: Copy prometheus.yml to the server
+      ansible.builtin.copy:
+        src: ~/ansible-monitor/monitoring-stack/prometheus.yaml
+        dest: "{{monitor_path}}/prometheus.yaml"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
