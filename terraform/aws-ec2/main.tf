@@ -32,5 +32,5 @@ resource "local_file" "ansible_inventory" {
   EOF
   
   # This saves the file as 'inventory.ini' in the same folder as your main.tf
-  filename = "${path.module}/ansible-monitor/inventory.ini"
+  filename = pathexpand("~/Key-projects/ansible/inventory.ini")
 }
